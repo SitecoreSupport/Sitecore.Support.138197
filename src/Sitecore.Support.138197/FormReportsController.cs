@@ -5,31 +5,30 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Sitecore.Web.Http.Filters;
+using Sitecore.Diagnostics;
+using Sitecore.Configuration;
 
 namespace Sitecore.Support.WFFM.Services.Requests.Controllers
 {
     public class FormReportsExController : Sitecore.WFFM.Services.Requests.Controllers.FormReportsController
     {
-        int maxJsonLength = 2097152;
+       
 
         public FormReportsExController() : base()
         {
 
         }
 
-        public FormReportsExController(IWfmDataProvider formsDataProvider, int MaxJsonLength) : base(formsDataProvider)
+        public FormReportsExController(IWfmDataProvider formsDataProvider) : base(formsDataProvider)
         {
-            if (MaxJsonLength > 0)
-            {
-                this.maxJsonLength = MaxJsonLength;
-            }
+           
         }
 
         [ValidateHttpAntiForgeryToken]
-        public new ActionResult GetFormFieldsStatisticsEx(Guid id)
+        public ActionResult GetFormFieldsStatisticsEx(Guid id)
         {
             JsonResult result = base.GetFormFieldsStatistics(id) as JsonResult;
-            result.MaxJsonLength = this.maxJsonLength;
+            result.MaxJsonLength = Settings.GetIntSetting("WFFM.MaxJsonLength", 2097152);
             return result;
         }
     }
