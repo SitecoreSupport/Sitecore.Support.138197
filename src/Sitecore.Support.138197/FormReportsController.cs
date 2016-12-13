@@ -26,7 +26,7 @@ namespace Sitecore.Support.WFFM.Services.Requests.Controllers
         }
 
         [ValidateHttpAntiForgeryToken]
-        public new ActionResult GetFormFieldsStatistics(Guid id)
+        public new ActionResult GetFormFieldsStatisticsEx(Guid id)
         {
             JsonResult result = base.GetFormFieldsStatistics(id) as JsonResult;
             result.MaxJsonLength = this.maxJsonLength;
